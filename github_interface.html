@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema de Controle de Estoque — Visualização (estilo GitHub)</title>
+  <style>
+    /* Reset simples */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f6f8fa;color:#24292e}
+
+    /* Top nav (simples inspirado no GitHub) */
+    .topbar{background:#24292e;color:#fff;display:flex;align-items:center;gap:16px;padding:12px 20px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:600}
+    .logo .octicon{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#2ea44f,#238636);display:inline-block}
+    .search{margin-left:20px;background:#ffffff11;padding:6px 10px;border-radius:6px;color:#fff;flex:1;max-width:520px}
+    .top-actions{margin-left:auto;display:flex;gap:10px}
+    .btn{background:#2ea44f;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;font-weight:600}
+
+    /* Layout */
+    .container{display:grid;grid-template-columns:260px 1fr;padding:24px;gap:24px}
+    .sidebar{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:16px;height:calc(100vh - 120px);overflow:auto}
+    .repo-header{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+    .repo-title{font-size:18px;font-weight:700}
+    .meta{color:#57606a;font-size:13px}
+
+    /* File panel */
+    .file-panel{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:16px}
+    .file-actions{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .path{font-family:monospace;color:#586069;background:#f1f8ff;padding:6px 8px;border-radius:6px}
+
+    /* Code block (estilo GitHub-ish) */
+    .code-wrap{border-radius:6px;border:1px solid #e1e4e8;background:#0d1117;color:#c9d1d9;padding:16px;overflow:auto}
+    .code-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .language{font-family:Inter,system-ui;font-size:13px;color:#c9d1d9;opacity:0.8}
+    .copy-btn{background:#21262d;color:#c9d1d9;padding:6px 10px;border-radius:6px;border:1px solid #30363d;font-size:13px}
+
+    /* Using <ol> for line numbers */
+    .code{font-family:SFMono-Regular,Consolas, Liberation Mono, Menlo, monospace;white-space:pre;line-height:1.45;font-size:13px;counter-reset:linenumber}
+    .code ol{list-style:none;margin:0;padding:0}
+    .code li{display:flex}
+    .code li::before{counter-increment:linenumber;content:counter(linenumber);width:48px;padding-right:12px;text-align:right;color:#8b949e;display:inline-block}
+    .code li span{display:inline-block;padding-right:12px}
+
+    /* Lightweight syntax coloring (no JS) */
+    .kw{color:#ff7b72;font-weight:600} /* keywords */
+    .str{color:#9cdcfe} /* strings */
+    .num{color:#ffb86b} /* numbers */
+    .comment{color:#8b949e;font-style:italic} /* comments */
+    .func{color:#b392f0} /* function names */
+
+    /* Responsiveness */
+    @media (max-width:900px){.container{grid-template-columns:1fr;padding:12px}.sidebar{display:none}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo"><span class="octicon"></span> meu-usuario / controle-estoque</div>
+    <div class="search">Search or jump to…</div>
+    <div class="top-actions">
+      <a class="btn" href="#">Star</a>
+      <a class="btn" href="#">Fork</a>
+    </div>
+  </div>
+
+  <main class="container">
+    <aside class="sidebar">
+      <div class="repo-header">
+        <div>
+          <div class="repo-title">controle-estoque</div>
+          <div class="meta">Python • 1 arquivo • Última alteração: hoje</div>
+        </div>
+      </div>
+
+      <nav style="margin-top:16px;font-size:14px;color:#0366d6">
+        <div style="padding:8px 0">Code</div>
+        <div style="padding:8px 0">Issues</div>
+        <div style="padding:8px 0">Pull requests</div>
+      </nav>
+    </aside>
+
+    <section>
+      <div class="file-panel">
+        <div class="file-actions">
+          <div class="path">/src/controle_estoque.py</div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyCode()">Copiar</button>
+            <button class="copy-btn">Raw</button>
+          </div>
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <div class="language">Python</div>
+            <div class="meta">tamanho: 18 linhas</div>
+          </div>
+
+          <div class="code" id="codeblock">
+            <ol>
+              <li><span class="comment">print("""</span></li>
+              <li><span class="comment">===========================================</span></li>
+              <li><span class="comment">BEM-VINDO AO SISTEMA DE CONTROLE DE ESTOQUE</span></li>
+              <li><span class="comment">===========================================</span></li>
+              <li><span class="comment">        """)</span></li>
+              <li><span>produto = input(<span class="str">"Insira o nome do produto: "</span>)</span></li>
+              <li><span>categoria = input(<span class="str">"Insira a categoria do produto: "</span>)</span></li>
+              <li><span>quantidade = input(<span class="str">"Insira a quantidade disponível no estoque: "</span>)</span></li>
+              <li><span> </span></li>
+              <li><span>if not categoria or not produto or not quantidade:</span></li>
+              <li><span>    print(<span class="str">"Preencha as informações corretamente"</span>)</span></li>
+              <li><span>else:</span></li>
+              <li><span>    quantidade = int(quantidade)</span></li>
+              <li><span> </span></li>
+              <li><span>    if categoria == <span class="str">"alimentos"</span>:</span></li>
+              <li><span>        if quantidade &gt; 50:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} disponível"</span>)</span></li>
+              <li><span>        else:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} indisponível"</span>)</span></li>
+              <li><span>    </span></li>
+              <li><span>    if categoria == <span class="str">"bebidas"</span>:</span></li>
+              <li><span>        if quantidade &gt; 75:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} disponível"</span>)</span></li>
+              <li><span>        else:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} indisponível"</span>)</span></li>
+              <li><span>            </span></li>
+              <li><span>    if categoria == <span class="str">"limpeza"</span>:</span></li>
+              <li><span>        if quantidade &gt; 30:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} disponível"</span>)</span></li>
+              <li><span>        else:</span></li>
+              <li><span>            print(f<span class="str">"Estoque de {produto} indisponível"</span>)</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function copyCode(){
+      // Build a plain text version from the <ol>
+      const ol = document.querySelector('#codeblock ol');
+      const lines = Array.from(ol.querySelectorAll('li')).map(li => li.innerText.replace(/\u00A0/g,' '));
+      const text = lines.join('\n');
+      navigator.clipboard.writeText(text).then(()=>{
+        alert('Código copiado para a área de transferência!');
+      }).catch(()=>{
+        alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.');
+      });
+    }
+  </script>
+</body>
+</html>
